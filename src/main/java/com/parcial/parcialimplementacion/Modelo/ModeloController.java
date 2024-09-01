@@ -3,6 +3,7 @@ package com.parcial.parcialimplementacion.Modelo;
 import com.parcial.parcialimplementacion.Modelo.ModeloService;
 import com.parcial.parcialimplementacion.Modelo.ModeloEntity;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class ModeloController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> postModelo( @RequestBody ModeloEntity modelo){
+    public ResponseEntity<?> postModelo(@Valid @RequestBody ModeloEntity modelo){
         try {
             modeloService.save(modelo);
             return ResponseEntity.status(201).body(modelo);
