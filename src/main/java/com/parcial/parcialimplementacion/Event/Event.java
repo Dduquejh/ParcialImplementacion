@@ -1,5 +1,7 @@
 package com.parcial.parcialimplementacion.Event;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.parcial.parcialimplementacion.Media.Event.EventMedia;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import lombok.Getter;
@@ -7,6 +9,8 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "event")
@@ -35,4 +39,8 @@ public class Event implements Serializable {
 
     @Column(name = "capacity")
     private int capacity;
+
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<EventMedia> media;
 }
