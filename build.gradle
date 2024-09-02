@@ -35,6 +35,15 @@ dependencies {
     implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.6.0'
     // https://mvnrepository.com/artifact/io.github.cdimascio/dotenv-java
     implementation 'io.github.cdimascio:java-dotenv:5.2.2'
+
+    //seguridad
+    // Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5' // Para usar JWT con Jackson
 }
 
 tasks.named('test') {
