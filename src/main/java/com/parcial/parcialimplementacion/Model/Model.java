@@ -1,37 +1,35 @@
-package com.parcial.parcialimplementacion.Modelo;
+package com.parcial.parcialimplementacion.Model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.parcial.parcialimplementacion.Portafolio.PortafolioEntity;
+import com.parcial.parcialimplementacion.Portfolio.Portfolio;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "model") //dudas de como llamar a la tabla
 
-public class ModeloEntity implements Serializable {
+public class Model implements Serializable {
     @Id
     @Getter()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long modeloId;
+    public Long modelId;
 
     @Column()
     @NotBlank(message = "Model name must not be empty")
     @Size(min = 1, message = "Model name must be al least 1 character")
     @Getter()
     @Setter()
-    private String modeloName;
+    private String modelName;
 
     @Column()
     @NotBlank(message = "Model description must not be empty")
     @Getter()
     @Setter()
-    private String modeloDescription;
+    private String modelDescription;
 
-    @OneToOne(mappedBy = "modelos", cascade = CascadeType.ALL)
-    private PortafolioEntity portafolio; //Al ser una relacion de uno a uno, esto es una variable y no una lista
+    @OneToOne(mappedBy = "model", cascade = CascadeType.ALL)
+    private Portfolio portfolio; //Al ser una relacion de uno a uno, esto es una variable y no una lista
 
 }

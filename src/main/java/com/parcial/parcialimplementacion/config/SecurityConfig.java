@@ -38,7 +38,8 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/welcome", "/auth/addNewUser", "/auth/generateToken").permitAll()
+                        .requestMatchers("/auth/welcome", "/auth/addNewUser", "/auth/generateToken",
+                                "/api/portfolios/**", "/api/events/**", "/api/models/**").permitAll()
                         .requestMatchers("/auth/admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/auth/user/**").hasAuthority("USER")
                         .requestMatchers("/docs/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() // Swagger endpoints
