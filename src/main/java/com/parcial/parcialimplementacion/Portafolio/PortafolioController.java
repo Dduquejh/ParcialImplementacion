@@ -15,18 +15,20 @@ import com.parcial.parcialimplementacion.Portafolio.IPortafolioService;
 @RestController()
 @RequestMapping("/api/portafolios")
 public class PortafolioController {
-    @Autowired
-    private IPortafolioService portafolioService;
+        @Autowired
+        private IPortafolioService portafolioService;
 
-    @PostMapping()
-    public ResponseEntity<?> postPortafolio(@RequestBody @Valid PortafolioEntity portafolio) {
-        try {
-            portafolioService.save(portafolio);
-            return ResponseEntity.status(201).body(portafolio);
-        } catch (Exception e) {
-            return createErrorResponse(e.getMessage(), 500);
+        @PostMapping()
+        public ResponseEntity<?> postPortafolio(@RequestBody PortafolioEntity portafolio) {
+            try {
+                System.out.println("Portafolio recibido: " + portafolio);
+                portafolioService.save(portafolio);
+                return ResponseEntity.status(201).body(portafolio);
+            } catch (Exception e) {
+                System.out.print(e.getMessage());
+                return createErrorResponse(e.getMessage(), 500);
+            }
         }
-    }
 
         @GetMapping()
         public List<PortafolioEntity> getPortafolios () {

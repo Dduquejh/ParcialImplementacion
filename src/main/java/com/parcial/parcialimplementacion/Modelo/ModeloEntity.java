@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "models") //dudas de como llamar a la tabla
+@Table(name = "model") //dudas de como llamar a la tabla
 
 public class ModeloEntity implements Serializable {
     @Id
@@ -27,11 +27,10 @@ public class ModeloEntity implements Serializable {
 
     @Column()
     @NotBlank(message = "Model description must not be empty")
-    @Pattern(regexp = "^[a-zA-Z0-9 ]*$", message = "Model description must contain only letters, numbers and spaces")
     @Getter()
     @Setter()
     private String Modelo_description;
 
     @OneToOne(mappedBy = "modelos", cascade = CascadeType.ALL)
-    private PortafolioEntity portafolios; //Al ser una relacion de uno a uno, esto es una variable y no una lista
+    private PortafolioEntity portafolio; //Al ser una relacion de uno a uno, esto es una variable y no una lista
 }

@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 
 @Entity
-@Table(name = "portafolios") //dudas de como llamar a la tabla
+@Table(name = "portafolio") //dudas de como llamar a la tabla
 public class PortafolioEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,6 @@ public class PortafolioEntity implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "Modelo_id")
-    @NotNull(message = "Model id must not be empty")
     @Getter()
     @Setter()
     private ModeloEntity modelos;

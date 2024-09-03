@@ -27,10 +27,12 @@ public class PortafolioService implements IPortafolioService{
 
     @Transactional
     @Override
-    public PortafolioEntity save(@Valid PortafolioEntity portafolio){
-        if (portafolio.getModelos()== null || modeloDAO.findById(portafolio.getModelos().getModelo_id()).isEmpty()){
-            throw new RuntimeException("Modelo is required");
+    public PortafolioEntity save(@Valid PortafolioEntity portafolio) {
+
+        if (portafolio.getModelos() == null || modeloDAO.findById(portafolio.getModelos().getModelo_id()).isEmpty()) {
+            throw new IllegalArgumentException("Modelo is required");
         }
+
         return portafolioDAO.save(portafolio);
     }
 
