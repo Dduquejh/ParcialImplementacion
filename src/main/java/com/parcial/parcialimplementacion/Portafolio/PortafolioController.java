@@ -21,7 +21,7 @@ public class PortafolioController {
         @PostMapping()
         public ResponseEntity<?> postPortafolio(@RequestBody PortafolioEntity portafolio) {
             try {
-                System.out.println("Portafolio recibido: " + portafolio);
+                System.out.println("Portafolio recibido: " + portafolio.getModelos());
                 portafolioService.save(portafolio);
                 return ResponseEntity.status(201).body(portafolio);
             } catch (Exception e) {
@@ -49,10 +49,6 @@ public class PortafolioController {
             portafolioService.deleteById(id);
         }
 
-        @GetMapping("/modelo/{Modelo_Id}")
-        public List<PortafolioEntity> getPortafolioByModeloId (@PathVariable Long Modelo_Id){
-            return portafolioService.findPortafolioByModeloId(Modelo_Id);
-        }
 
         private ResponseEntity<Map<String, String>> createErrorResponse (String message,int status){
             Map<String, String> response = new HashMap<>();

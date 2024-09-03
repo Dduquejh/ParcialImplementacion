@@ -8,5 +8,4 @@ public interface IPortafolioService {
     public void deleteById(Long id);
     public PortafolioEntity findById(Long id);
     public List<PortafolioEntity> findAll();
-    public List<PortafolioEntity> findPortafolioByModeloId(Long Modelo_id);
 }

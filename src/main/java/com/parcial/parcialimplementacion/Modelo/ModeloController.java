@@ -52,8 +52,8 @@ public class ModeloController {
         if(modeloActual == null){
             throw new RuntimeException("Modelo no encontrado");
         }
-        modelo.setModelo_name(modelo.getModelo_name());
-        modelo.setModelo_description(modelo.getModelo_description());
+        modelo.setModeloName(modelo.getModeloName());
+        modelo.setModeloDescription(modelo.getModeloDescription());
         return modeloService.save(modelo);
     }
 

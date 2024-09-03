@@ -29,12 +29,21 @@ public class PortafolioService implements IPortafolioService{
     @Override
     public PortafolioEntity save(@Valid PortafolioEntity portafolio) {
 
-        if (portafolio.getModelos() == null || modeloDAO.findById(portafolio.getModelos().getModelo_id()).isEmpty()) {
+        if (portafolio.getModelos() == null) {
             throw new IllegalArgumentException("Modelo is required");
         }
 
+        if (portafolio.getModelos().getModeloId() == null || modeloDAO.findById(portafolio.getModelos().getModeloId()).isEmpty()) {
+            throw new IllegalArgumentException("Modelo with ID " + portafolio.getModelos().getModeloId() + " does not exist");
+        }
+
+        // Optionally, log the details of the portafolio and modelos
+        System.out.println("Saving Portafolio: " + portafolio);
+        System.out.println("Modelo ID: " + portafolio.getModelos().getModeloId());
+
         return portafolioDAO.save(portafolio);
     }
+
 
     @Override
     public PortafolioEntity findById(Long id) {
@@ -45,10 +54,4 @@ public class PortafolioService implements IPortafolioService{
     public void deleteById(Long id){
         portafolioDAO.deleteById(id);
     }
-
-    @Override
-    public List<PortafolioEntity> findPortafolioByModeloId(Long Modelo_id){
-        return portafolioDAO.findPortafolioByModeloId(Modelo_id);
-    }
-
 }

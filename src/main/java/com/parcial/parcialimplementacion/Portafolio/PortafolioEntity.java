@@ -17,17 +17,17 @@ public class PortafolioEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Portafolio_id;
+    private Long portafolioId;
 
     @Column()
     @NotBlank(message = "Portafolio description must not be empty")
     @Pattern(regexp = "^[a-zA-Z0-9 ]*$", message = "Portafolio description must contain only letters, numbers and spaces")
     @Getter()
     @Setter()
-    private String Portafolio_description;
+    private String portafolioDescription;
 
     @OneToOne
-    @JoinColumn(name = "Modelo_id")
+    @JoinColumn(name = "modeloId")
     @Getter()
     @Setter()
     private ModeloEntity modelos;
