@@ -12,7 +12,7 @@ import java.util.*;
 
 
 @RestController()
-@RequestMapping("/api/modelo")
+@RequestMapping("/api/modelos")
 public class ModeloController {
     @Autowired
     private ModeloService modeloService;

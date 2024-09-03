@@ -1,6 +1,7 @@
 package com.parcial.parcialimplementacion.Modelo;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.parcial.parcialimplementacion.Portafolio.PortafolioEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -31,7 +32,6 @@ public class ModeloEntity implements Serializable {
     @Setter()
     private String Modelo_description;
 
-    //faltaria la relacion con la tabla de la base de datos
-
-
+    @OneToOne(mappedBy = "modelos", cascade = CascadeType.ALL)
+    private PortafolioEntity portafolios; //Al ser una relacion de uno a uno, esto es una variable y no una lista
 }
