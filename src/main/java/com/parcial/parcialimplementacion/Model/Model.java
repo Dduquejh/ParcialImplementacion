@@ -8,8 +8,7 @@ import lombok.Setter;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "model") //dudas de como llamar a la tabla
-
+@Table(name = "model")
 public class Model implements Serializable {
     @Id
     @Getter()
@@ -30,6 +29,6 @@ public class Model implements Serializable {
     private String modelDescription;
 
     @OneToOne(mappedBy = "model", cascade = CascadeType.ALL)
-    private Portfolio portfolio; //Al ser una relacion de uno a uno, esto es una variable y no una lista
+    private Portfolio portfolio;
 
 }
