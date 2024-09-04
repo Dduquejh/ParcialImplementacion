@@ -28,7 +28,7 @@ public class Model implements Serializable {
     @Setter()
     private String modelDescription;
 
-    @OneToOne(mappedBy = "model", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "model", cascade = CascadeType.ALL, orphanRemoval = true)
     private Portfolio portfolio;
 
 }

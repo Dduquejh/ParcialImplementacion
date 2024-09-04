@@ -1,7 +1,7 @@
 package com.parcial.parcialimplementacion.Portfolio;
 
 import com.parcial.parcialimplementacion.Model.IModelDAO;
-
+import com.parcial.parcialimplementacion.Model.Model;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.transaction.Transactional;
@@ -46,8 +46,21 @@ public class PortfolioService implements IPortfolioService {
         return portfolioDAO.findById(id).orElse(null);
     }
 
+    @Transactional
     @Override
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
+        Portfolio portfolio = portfolioDAO.findById(id).orElse(null);
+
+        if (portfolio == null) {
+            throw new IllegalArgumentException("Portfolio with ID " + id + " does not exist");
+        }
+
+
+        Model model = portfolio.getModel();
+        if (model != null) {
+            portfolioDAO.detachModelFromPortfolio(id);
+        }
+
         portfolioDAO.deleteById(id);
     }
 }
