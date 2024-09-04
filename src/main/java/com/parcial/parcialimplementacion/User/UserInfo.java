@@ -1,12 +1,11 @@
 package com.parcial.parcialimplementacion.User;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.parcial.parcialimplementacion.User.Role.Role;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.Set;
 
 @Entity
 @Data
@@ -19,5 +18,13 @@ public class UserInfo {
     private String name;
     private String email; // Also is the username
     private String password;
-    private String role;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
 }

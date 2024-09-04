@@ -32,10 +32,8 @@ public class UserInfoService implements UserDetailsService {
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(UserInfo user) {
-        String roles[] = {user.getRole()};
-
-        return Arrays.stream(roles).toList().stream()
-                .map(SimpleGrantedAuthority::new)
+        return user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
     }
 
