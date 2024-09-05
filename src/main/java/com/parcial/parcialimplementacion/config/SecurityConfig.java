@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/welcome", "/auth/addNewUser", "/auth/generateToken",
                                 "/api/portfolios/**", "/api/events/**", "/api/models/**", "/auth/roles").permitAll()
-                        .requestMatchers("/auth/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/auth/admin/**").hasAuthority("ADMIN_ROLE")
                         .requestMatchers("/auth/user/**").hasAuthority("USER")
                         .requestMatchers("/docs/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() // Swagger endpoints
                         .anyRequest().authenticated()

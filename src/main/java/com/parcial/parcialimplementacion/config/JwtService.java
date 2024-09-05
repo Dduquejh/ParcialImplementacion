@@ -6,26 +6,35 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.io.Decoders;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.List;
 
 @Component
 public class JwtService {
-    Dotenv dotenv = Dotenv.load();
-    public String getSecretKey() {
+    private final Dotenv dotenv = Dotenv.load();
+
+    private String getSecretKey() {
         return dotenv.get("SECRET_KEY");
     }
 
-    // Generate token with given username
-    public String generateToken(String userName){
+    // Generate token with given username and roles
+    public String generateToken(UserDetails userDetails){
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userName);
+        claims.put("roles", userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList())); // Convert Set to List for JSON serialization
+        return createToken(claims, userDetails.getUsername());
     }
 
     // Create a JWT with specified claims and subject (username)
@@ -47,7 +56,7 @@ public class JwtService {
 
     // Extract the username from the token
     public String extractUsername(String token){
-        return extractClaim(token , Claims::getSubject);
+        return extractClaim(token, Claims::getSubject);
     }
 
     // Extract the expiration date from the token
@@ -68,6 +77,16 @@ public class JwtService {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    // Extract roles from the token
+    @SuppressWarnings("unchecked")
+    public Set<SimpleGrantedAuthority> extractRoles(String token) {
+        Claims claims = extractAllClaims(token);
+        List<String> roles = (List<String>) claims.get("roles"); // Convert List back to Set
+        return roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toSet());
     }
 
     // Check if the token is expired

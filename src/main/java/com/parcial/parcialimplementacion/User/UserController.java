@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,9 +34,9 @@ public class UserController {
     }
 
     // This endpoint is secured and only accessible by users with the role of ADMIN
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN_ROLE')")
     @GetMapping("/admin/adminProfiler")
-    public String adminProfiler() {
+    public String adminProfiler(@RequestHeader("Authorization") String token) {
         System.out.println("Admin profiler accessed");
         return "Welcome to the admin profiler, this endpoint is secure";
     }
@@ -46,8 +47,9 @@ public class UserController {
             new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
         );
         if (authentication.isAuthenticated()) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             System.out.println("User authenticated");
-            return jwtService.generateToken(authRequest.getEmail());
+            return jwtService.generateToken(userDetails);
         } else {
             System.out.println("User not authenticated");
             throw new UsernameNotFoundException("Invalid credentials");
