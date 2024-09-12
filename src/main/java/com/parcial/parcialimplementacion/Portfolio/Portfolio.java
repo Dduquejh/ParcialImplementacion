@@ -2,7 +2,8 @@ package com.parcial.parcialimplementacion.Portfolio;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.parcial.parcialimplementacion.Media.Portfolio.PortfolioMedia;
-import com.parcial.parcialimplementacion.Model.Model;
+import com.parcial.parcialimplementacion.Event.Event;
+import com.parcial.parcialimplementacion.User.UserInfo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -28,10 +29,13 @@ public class Portfolio implements Serializable {
     private String portfolioDescription;
 
     @OneToOne
-    @JoinColumn(name = "modelId")
-    private Model model;
+    @JoinColumn(name = "user_id")
+    private UserInfo model;
 
     @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Set<PortfolioMedia> media;
+
+    @ManyToMany(mappedBy = "models")
+    private Set<Event> events;
 }

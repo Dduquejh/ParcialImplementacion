@@ -1,7 +1,10 @@
 package com.parcial.parcialimplementacion.Event;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.parcial.parcialimplementacion.Portfolio.Portfolio;
 import com.parcial.parcialimplementacion.Media.Event.EventMedia;
+import com.parcial.parcialimplementacion.User.UserInfo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import lombok.Getter;
@@ -43,4 +46,17 @@ public class Event implements Serializable {
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Set<EventMedia> media;
+
+    @ManyToMany
+    @JoinTable(
+            name = "event_model",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "model_id")
+    )
+    private Set<Portfolio> models = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "organizer_id")
+    @JsonBackReference
+    private UserInfo organizer;
 }
