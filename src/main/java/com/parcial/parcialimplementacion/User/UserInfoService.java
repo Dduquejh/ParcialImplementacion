@@ -3,15 +3,14 @@ package com.parcial.parcialimplementacion.User;
 import com.parcial.parcialimplementacion.User.Role.IRoleDAO;
 import com.parcial.parcialimplementacion.User.Role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,8 +37,9 @@ public class UserInfoService implements UserDetailsService {
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(UserInfo user) {
-        return user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
+        String roles[]= {user.getRol()};
+        return Arrays.stream(roles).toList().stream()
+                .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
 
@@ -49,8 +49,7 @@ public class UserInfoService implements UserDetailsService {
         if (attendeeRole == null) {
             throw new RuntimeException("Role not found");
         }
-        Set<Role> roles = Collections.singleton(attendeeRole);
-        userInfo.setRoles(roles);
+        userInfo.setRol(attendeeRole.getName());
         userInfoRepository.save(userInfo);
         return "User added successfully";
     }

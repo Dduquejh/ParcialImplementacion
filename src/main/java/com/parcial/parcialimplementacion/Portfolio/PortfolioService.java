@@ -1,7 +1,7 @@
 package com.parcial.parcialimplementacion.Portfolio;
 
-import com.parcial.parcialimplementacion.Model.IModelDAO;
-import com.parcial.parcialimplementacion.Model.Model;
+import com.parcial.parcialimplementacion.User.IUserInfoRepository;
+import com.parcial.parcialimplementacion.User.UserInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.transaction.Transactional;
@@ -14,7 +14,7 @@ public class PortfolioService implements IPortfolioService {
     @Autowired
     private IPortfolioDAO portfolioDAO;
     @Autowired
-    private IModelDAO modelDAO;
+    private IUserInfoRepository modelDAO;
 
     @Override
     public List<Portfolio> findAll() {
@@ -29,13 +29,13 @@ public class PortfolioService implements IPortfolioService {
             throw new IllegalArgumentException("model is required");
         }
 
-        if (portfolio.getModel().getModelId() == null || modelDAO.findById(portfolio.getModel().getModelId()).isEmpty()) {
-            throw new IllegalArgumentException("model with ID " + portfolio.getModel().getModelId() + " does not exist");
+        if (portfolio.getModel().getUserID() == null || modelDAO.findById(portfolio.getModel().getUserID()).isEmpty()) {
+            throw new IllegalArgumentException("model with ID " + portfolio.getModel().getUserID() + " does not exist");
         }
 
         // Optionally, log the details of the portfolio and models
         System.out.println("Saving portfolio: " + portfolio);
-        System.out.println("model ID: " + portfolio.getModel().getModelId());
+        System.out.println("model ID: " + portfolio.getModel().getUserID());
 
         return portfolioDAO.save(portfolio);
     }
@@ -56,7 +56,7 @@ public class PortfolioService implements IPortfolioService {
         }
 
 
-        Model model = portfolio.getModel();
+        UserInfo model = portfolio.getModel();
         if (model != null) {
             portfolioDAO.detachModelFromPortfolio(id);
         }
