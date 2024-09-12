@@ -1,5 +1,6 @@
 package com.parcial.parcialimplementacion.Portfolio;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.parcial.parcialimplementacion.Media.Portfolio.PortfolioMedia;
 import com.parcial.parcialimplementacion.Event.Event;
@@ -30,12 +31,14 @@ public class Portfolio implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private UserInfo model;
 
     @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("portfolio-media")
     private Set<PortfolioMedia> media;
 
     @ManyToMany(mappedBy = "models")
+    @JsonIgnore
     private Set<Event> events;
 }

@@ -1,10 +1,10 @@
 package com.parcial.parcialimplementacion.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.parcial.parcialimplementacion.Event.Event;
-import com.parcial.parcialimplementacion.Media.Portfolio.PortfolioMedia;
+import com.parcial.parcialimplementacion.Ticket.Ticket;
 import com.parcial.parcialimplementacion.Portfolio.Portfolio;
-import com.parcial.parcialimplementacion.User.Role.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,9 +33,14 @@ public class UserInfo {
     private Set<Role> roles;*/
 
     @OneToOne(mappedBy = "model", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Portfolio portfolio;
 
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private Set<Event> media;
+    @JsonManagedReference("organizer-event")
+    private Set<Event> event;
+
+    @OneToMany(mappedBy = "attendee", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("attendee-ticket")
+    private Set<Ticket> tickets;
 }

@@ -18,6 +18,6 @@ public class EventMedia{
 
     @ManyToOne
     @JoinColumn(name = "event_id")
-    @JsonBackReference
+    @JsonBackReference("event-media")
     private Event event;
 }

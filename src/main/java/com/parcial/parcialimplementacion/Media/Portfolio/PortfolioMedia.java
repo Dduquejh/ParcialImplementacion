@@ -18,6 +18,6 @@ public class PortfolioMedia{
 
     @ManyToOne
     @JoinColumn(name = "portfolio_id")
-    @JsonBackReference
+    @JsonBackReference("portfolio-media")
     private Portfolio portfolio;
 }
